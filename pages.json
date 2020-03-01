@@ -1,0 +1,149 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",  // tabbar首页
+			"style": {
+				"navigationStyle": "custom",
+				"onReachBottomDistance": 50
+			}
+		}
+	    ,{
+            "path" : "pages/class/class",  // tabbar分类
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/eat/eat",  // tabbar 吃什么
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/cart/cart",  // tabbar购物车
+            "style" : {
+				// "navigationStyle": "custom"
+				"navigationBarTitleText": "购物车"
+			}
+        }
+        ,{
+            "path" : "pages/home/home",  // tabbar我的
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/shoping/shoping",   //产品详情页
+            "style" : {
+				"navigationBarTitleText": "产品详情"
+				
+			}
+        }
+        ,{
+            "path" : "pages/order/order",  //提交订单
+            "style" : {
+				
+			}
+        }
+        ,{
+            "path" : "pages/shoplist/shoplist",  //商品清单
+            "style" : {
+				
+			}
+        }
+        ,{
+            "path" : "pages/address/address",  //收货地址
+            "style" : {
+				"navigationBarTitleText": "收货地址"
+			}
+        }
+        ,{
+            "path" : "pages/allorder/allorder",  //全部订单页
+            "style" : {
+				
+			}
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {
+				"navigationBarTitleText": "登陆/注册"
+			}
+        }
+        ,{
+            "path" : "pages/addressEdit/addressEdit",
+            "style" : {
+				"navigationBarTitleText": "添加/编辑地址"
+			}
+        }
+        ,{
+            "path" : "pages/options/options",
+            "style" : {
+				"navigationBarTitleText": "意见反馈"
+			}
+        }
+        ,{
+            "path" : "pages/about/about",
+            "style" : {
+				"navigationBarTitleText": "关于"
+			}
+        }
+        ,{
+            "path" : "pages/vip/vip",
+            "style" : {
+				"navigationBarTitleText": "叮咚会员"
+			}
+        }
+        ,{
+            "path" : "pages/user/user",
+            "style" : {
+				"navigationBarTitleText": "个人中心"
+			}
+        }
+        ,{
+            "path" : "pages/details/details",
+            "style" : {
+				"navigationBarTitleText": "订单详情"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "叮当买菜",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#3cc51f",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/index/index",
+	        "iconPath": "static/tabbar/h1.png",
+	        "selectedIconPath": "static/tabbar/h2.png",
+	        "text": "首页"
+	    }, {
+	        "pagePath": "pages/class/class",
+	        "iconPath": "static/tabbar/c1.png",
+	        "selectedIconPath": "static/tabbar/c2.png",
+	        "text": "分类"
+	    }, 
+		// {
+	 //        "pagePath": "pages/eat/eat",
+	 //        "iconPath": "static/tabbar/m1.png",
+	 //        "selectedIconPath": "static/tabbar/m2.png",
+	 //        "text": "菜谱"
+	 //    }, 
+		{
+	        "pagePath": "pages/cart/cart",
+	        "iconPath": "static/tabbar/g1.png",
+	        "selectedIconPath": "static/tabbar/g2.png",
+	        "text": "购物车"
+	    }, {
+	        "pagePath": "pages/home/home",
+	        "iconPath": "static/tabbar/i1.png",
+	        "selectedIconPath": "static/tabbar/i2.png",
+	        "text": "我的"
+	    }]
+	}
+}

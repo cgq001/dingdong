@@ -1,0 +1,20 @@
+{
+  "name": "uniapp",
+  "version": "1.0.0",
+  "description": "买菜APP的uni-app版",
+  "main": "main.js",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "vant": "^2.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/cgq666/foot-uniAPP.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
