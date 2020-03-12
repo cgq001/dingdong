@@ -3,7 +3,7 @@ const user = {
 	namespaced: true,
     state: {
         token: token,
-		http: 'http://192.168.31.26:5005/h5/',  //'http://192.168.188.200:5005/'
+		http: 'http://dingdong-api.nodebook.top/h5/',  //'http://192.168.188.200:5005/'
         userList:{    //用户信息
            tel:null,
 		   username: ''

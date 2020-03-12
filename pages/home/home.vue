@@ -186,7 +186,7 @@
 				  confirmButtonText: '去GitGub'
 				}).then(() => {
 				  // on confirm
-				  window.location.href = 'https://gitee.com/cgq666/foot-uniAPP'
+				  window.location.href = 'https://github.com/cgq001/dingdong'
 				}).catch(() => {
 				  // on cancel
 				});
