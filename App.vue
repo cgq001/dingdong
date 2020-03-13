@@ -2,6 +2,27 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			uni.getSystemInfo({
+			    success: function (res) {
+			        
+					if(res.platform === 'ios' || res.platform === 'android'){
+						
+						
+					}else{
+						uni.showModal({
+						    title: '温馨提示',
+						    content: '请在手机上查看',
+						    success: function (res) {
+						        if (res.confirm) {
+						            console.log('用户点击确定');
+						        } else if (res.cancel) {
+						            console.log('用户点击取消');
+						        }
+						    }
+						});
+					}
+			    }
+			});
 		},
 		onShow: function() {
 			console.log('App Show')

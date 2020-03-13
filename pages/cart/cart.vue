@@ -111,8 +111,20 @@
 		onLoad() {
 			let Token = this.$store.state.user.token
 			if(!Token){
-				uni.navigateTo({
-				    url: '/pages/login/login'
+				uni.showModal({
+				    title: '温馨提示',
+				    content: '你还没有登陆,现在去登陆?',
+				    success: function (res) {
+				        if (res.confirm) {
+				           uni.redirectTo({
+				               url: '/pages/login/login'
+				           });
+				        } else if (res.cancel) {
+				            uni.switchTab({
+				                url: '/pages/index/index'
+				            });
+				        }
+				    }
 				});
 			}
 			this.infoGoods(1)

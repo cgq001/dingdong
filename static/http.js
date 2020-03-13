@@ -62,8 +62,23 @@ const requests = (url, method, data={}) => {
         // })
 		//console.log(store.state.user.token)
 		if(!store.state.user.token || store.state.user.token === null ){
-			uni.navigateTo({
-			    url: '/pages/login/login'
+			// uni.navigateTo({
+			//     url: '/pages/login/login'
+			// });
+			uni.showModal({
+			    title: '温馨提示',
+			    content: '你还没有登陆,现在去登陆?',
+			    success: function (res) {
+			        if (res.confirm) {
+			           uni.redirectTo({
+			               url: '/pages/login/login'
+			           });
+			        } else if (res.cancel) {
+			            uni.switchTab({
+			                url: '/pages/index/index'
+			            });
+			        }
+			    }
 			});
 			
 			return false;
