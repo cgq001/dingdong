@@ -5,6 +5,12 @@
 
 
 后台管理地址: http://dingdong-admin.nodebook.top
+
+接口源码: https://github.com/cgq001/dingdong-node
+
+接口文档: http://www.docway.net/project/1RegDIiCClF/1RegN4RuBJA
+
+
 #### 1.首页
 
 ![](https://user-gold-cdn.xitu.io/2020/3/12/170ccefad77bb8b3?w=342&h=582&f=gif&s=1146154)
