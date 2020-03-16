@@ -4,6 +4,13 @@
 此项目为uni-app 打造的H5版商城,如果需要小程序和APP版本 请更换Ui库 从vant 网页版 换成 vant 的小程序版
 
 
+>注意:本项目需要使用uni-app框架的专属编辑器 HbuilderX 才可以允许
+
+
+
+>由于本项目 的UI库 部分采用vant的H5版本, 所以 也需要 npm install 进行初始化
+
+
 后台管理地址: http://dingdong-admin.nodebook.top
 
 接口源码: https://github.com/cgq001/dingdong-node
