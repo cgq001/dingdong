@@ -16,7 +16,6 @@
 
 接口源码: https://github.com/cgq001/dingdong-node
 
-接口文档: http://www.docway.net/project/1RegDIiCClF/1RegN4RuBJA
 
 
 #### 1.首页
