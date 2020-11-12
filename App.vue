@@ -17,7 +17,7 @@
 	/*每个页面公共css */
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
-	/* @import  "static/css/icon/iconfont.css";  */
+	/* @import  "static/css/icon/iconfont.css"; */
 	/*每个页面公共css */
 	.status_bar {
 	      height: var(--status-bar-height);
