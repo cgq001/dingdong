@@ -1,13 +1,64 @@
 <template>
 	<view class="login">
-		<input class="login-phone" v-model="phone" type="text" placeholder="输入手机号(新手机号自动注册)" />
-		<view class="login-pass">
-			<input class="login-phone" v-model='code'  type="text" placeholder="输入手机验证码" />
-			<text class="login-pass-text" :style="phoneOff ? 'background: #007AFF;' : ''" @click="sendCode">{{codeInp >=60 ? '获取验证码' : '剩余'+codeInp+'秒' }}</text>
+		<view class="status_bar">
+		          <!-- 这里是状态栏 -->
 		</view>
-		<!-- 登陆 -->
-		<view class="login-btns" :style="codeOff ? 'background: #007AFF;' : ''" @click="loginBtns">
-			登陆
+		<view class="login-box">
+			<!-- 关闭按钮 -->
+			<view class="login-box-close">
+				<text class="lg text-gray cuIcon-close"></text>
+			</view>
+			<!-- APP名称 -->
+			<view class="login-box-name">登陆叮咚到家</view>
+			<!-- 输入手机号 -->
+			<view class="login-box-phone">
+				<view class="login-box-phone-box">
+					<input class="login-box-phone-box-input" type="number" placeholder="请输入手机号"  maxlength="11"  mixlength="11" />
+				</view>
+			</view>
+			<!-- 提示文字 -->
+			<view class="login-box-prompt">
+				未注册的手机号,验证后自动创建账户
+			</view>
+			<!-- 获取验证码 -->
+			<view class="login-box-captcha">
+				<view class="login-box-captcha-box" @click="goCode">
+					获取验证码
+				</view>
+			</view>
+			<!-- 遇到问题 -->
+			<view class="login-box-problem">
+				密码登陆
+			</view>
+			<!-- 顶到到底部 -->
+			<view class="login-box-fixed">
+				<!-- 第三方登陆 -->
+				<view class="login-box-party">
+					<view class="login-box-party-list">
+						<view class="login-box-party-list-icon">
+							<view class="login-box-party-list-icon-box">
+								<u-icon name="weibo" color="#EF221D" size="56"></u-icon>
+							</view>
+						</view>
+						<view class="login-box-party-list-name">微博</view>
+					</view>
+					<view class="login-box-party-list">
+						<view class="login-box-party-list-icon">
+							<view class="login-box-party-list-icon-box">
+								<u-icon name="qq-fill" color="#0FB7E8" size="56"></u-icon>
+							</view>
+						</view>
+						<view class="login-box-party-list-name">QQ</view>
+					</view>
+				</view>
+				<!-- 协议 -->
+				<view class="login-box-fixed-foot">
+					<text>登陆代表你同意并遵守</text>
+					<navigator url="/pages/index/index" style="color: #29BF00;" open-type='switchTab' hover-class="none">
+						《 叮咚到家免责协议 》
+					</navigator>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -16,154 +67,157 @@
 	export default {
 		data() {
 			return {
-				phone: undefined,
-				code: undefined,
-				phoneOff: false,  //手机号是否验证通过
-				codeNums: null,  //验证码
-				codeInp: 60,  //倒计时
-				codeTime: null , //定时器
-				codeStart: false,
-				codeOff: false // 验证码是否验证通过
+				
 			}
 		},
 		methods: {
-			sendCode(){  //点击获取验证码
-				if(this.phoneOff){
-					let This = this
-					let codeNums = parseInt(Math.random()*10000)
-					This.codeStart = false	
-					uni.showModal({
-					    title: '提示',
-					    content: '你的验证码是'+codeNums,
-					    success: function (res) {
-					        if (res.confirm) {
-								This.codeNums = codeNums
-								This.codeStart = true
-					            This.codeInpSet()
-					        } else if (res.cancel) {
-					            
-					        }
-					    }
-					})
-				}else{
-					uni.showToast({
-					    title: '请输入正确的手机号',
-						icon: 'none',
-					    duration: 2000
-					});
-				}
-			},
-			codeInpSet(){ // 倒计时定时器
-				let This = this
-			
-				clearInterval(This.codeTime)
-				
-				This.codeInp = 60
-				This.codeTime = setInterval(function(){
-					if(This.codeInp>=1){
-						This.codeInp --
-					}else{
-						This.codeInp = 60
-						This.codeNums = null
-						This.codeStart = false
-						clearInterval(This.codeTime)
-					}
-				},1000)
-			},
-			loginBtns(){  //登陆按钮
-				let This = this
-				if(this.codeOff){
-					this.http('nottoken/login','post',{
-						phone: this.phone
-					}).then(res=>{
-						console.log(res)
-						if(res.data.code === 0){
-							This.$store.commit('user/addToken',res.data.data.token)
-							// This.$store.commit('addToken',res.data.data.token)
-							uni.setStorageSync('token', res.data.data.token);
-							uni.switchTab({
-							    url: '/pages/home/home'
-							});
-						}
-					})
-						
-				}else{
-					uni.showToast({
-					    title: '请输入正确的验证码',
-						icon: 'none',
-					    duration: 2000
-					});
-				}
-			}
-		},
-		watch:{
-			phone(news,olds){ //监听手机号是否正确
-				let rg = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
-				this.phoneOff = rg.test(news)
-				
-			},
-			code(news,olds){ //监听 验证码是否验证通过
-				if(news ==  this.codeNums && news != null ){
-						this.codeOff  = true
-					}else{
-						this.codeOff  = false
-					}
+			goCode(){
+				uni.navigateTo({
+				    url: '/pages/code/code'
+				});
 			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
 .login{
 	width: 100%;
 	height: 100%;
-	background:  #FFFFFF;
 }
-.login-phone{
-	/* background: #FFFFFF; */
+.login-box{
 	width: 100%;
-	height: 100rpx;
-	border-bottom: 1rpx solid #CCCCCC;
-	padding-left: 25rpx;
-	padding-right: 25px;
+	height: calc(100% - var(--status-bar-height));
+	background: #FFFFFF;
+}
+.login-box-close{
+	width: 100%;
+	height: 92rpx;
+	padding: 0 32rpx;
+	line-height: 92rpx;
 	box-sizing: border-box;
-	font-size: 30rpx;
-	margin-bottom: 20rpx;
+	margin-bottom: 26rpx;
 }
-.login-phone:placeholder-shown{
-	color: #CCCCCC;
+.login-box-close text{
+	font-size: 50rpx;
+	color: #30A500;
 }
-.login-phone:-ms-input-placeholder{
-	color: #CCCCCC;
-}
-.login-pass{
+.login-box-name{
 	width: 100%;
-	height: 100rpx;
-	position: relative;
-	margin-bottom: 50rpx;
+	height: 172rpx;
+	line-height: 172rpx;
+	font-size: 50rpx;
+	color: #000000;
+	padding: 0 82rpx;
+	box-sizing: border-box;
 }
-.login-pass-text{
-	display: inline-block;
-	background: #CCCCCC;
-	width: 200rpx;
-	height: 80rpx;
-	text-align: center;
-	line-height: 80rpx;
+.login-box-phone{
+	width: 100%;
+	height: 104rpx;
+	padding: 0rpx 82rpx;
+	box-sizing: border-box;
+}
+.login-box-phone-box{
+	width: 100%;
+	height: 100%;
+	border-bottom: 1rpx solid #DFDFDF;
+}
+.login-box-phone-box-input{
+	font-size: 34rpx;
+}
+.login-box-prompt{
+	width: 100%;
+	height: 72rpx;
+	line-height: 72rpx;
+	color: #919191;
+	font-size: 24rpx;
+	padding-left: 82rpx;
+	box-sizing: border-box;
+}
+.login-box-captcha{
+	width: 100%;
+	height: 144rpx;
+	padding: 28rpx 76rpx;
+	box-sizing: border-box;
+}
+.login-box-captcha-box{
+	width: 100%;
+	height: 100%;
+	border-radius: 544rpx;
+	background: #D6D6D6;
 	color: #FFFFFF;
-	border-radius: 40rpx;
+	font-size: 30rpx;
+	font-weight: bold;
+	text-align: center;
+	line-height: 88rpx;
+}
+.login-box-problem{
+	width: 100%;
+	height: 62rpx;
+	padding: 0 82rpx;
+	line-height: 62rpx;
+	box-sizing: border-box;
+	color: #4A8F16;
+	font-size: 22rpx;
+}
+/* .login-box-problem text{
+	color: #4A8F16;
+	font-size: 22rpx;
+} */
+/* 定位到底部 */
+.login-box-fixed{
+	width: 100%;
+	height: auto;
 	position: absolute;
-	right: 25rpx;
-	top: 10rpx;
+	left: 0;
+	bottom: 0rpx;
 }
-.login-btns{
-	width: 700rpx;
-	height: 100rpx;
-	margin-left: 25rpx;
-	background: #CCCCCC;
+.login-box-fixed-foot{
+	width: 100%;
+	height: 104rpx;
+	padding: 0 80rpx;
+	box-sizing: border-box;
+	font-size: 20rpx;
+	line-height: 104rpx;
+	color: #8B8B8B;
+	display: flex;
+	justify-content: center;
+}
+.login-box-fixed-foot-check{
+	width: 22rpx !important;
+	height: 22rpx !important;
+}
+.login-box-party{
+	width: 100%;
+	height: 152rpx;
+	display: flex;
+	justify-content: space-between;
+	
+}
+.login-box-party-list{
+	width: 50%;
+	height: 152rpx;
+}
+.login-box-party-list-icon{
+	width: 100%;
+	height: 104rpx;
+	display: flex;
+	justify-content: center;
+}
+.login-box-party-list-icon-box{
+	width: 104rpx;
+	height: 104rpx;
+	border-radius: 52rpx;
+	border: 1rpx solid #ECECEC;
 	text-align: center;
-	line-height: 100rpx;
-	color: #FFFFFF;
-	border-radius: 50rpx;
-	font-size: 36rpx;
+	line-height: 104rpx;
+}
+.login-box-party-list-name{
+	width: 100%;
+	height: 48rpx;
+	text-align: center;
+	line-height: 48rpx;
+	font-size: 22rpx;
+	color: #909090;
 }
 </style>

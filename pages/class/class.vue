@@ -1,346 +1,370 @@
 <template>
-	<view class="class">
-		<view class="status_bar">
-		          <!-- 这里是状态栏 -->
-		</view>
-		<!-- 分栏滚动 -->
-		<view class="contentBox">
-			<!-- 搜索 -->
-			<view class="contentBox-titleFiex-input">
-				<div class="contentBox-titleFiex-input-box">
-					<text class="lg text-gray cuIcon-search"></text>
-					番茄
-				</div>
+	<view class="classBox">
+		<view class="classBox-head">
+			<view class="status_bar">
+			          <!-- 这里是状态栏 -->
 			</view>
-			<!-- 滚动区域 -->
-			<view class="class-scroll">
-				<!-- 左侧 -->
-				<scroll-view class="class-scroll-left" scroll-y="true">
-					<view class="class-scroll-left-list" v-for="(item,index) in classAll" :key="index" :style="item.id ===indexs && 'background: #FFFFFF;'" @click="infoGoodsId(item.id)">
-						{{item.name}}
-					</view>
-				</scroll-view>
-				<!-- 右侧 -->
-				<scroll-view class="class-scroll-right" scroll-y="true">
-					<!-- 标题 -->
-					<view class="class-scroll-right-title">{{className}}</view>
-					<!-- 列表 -->
-					<view class="class-scroll-right-list" v-for="(item,index) in goodsAll" :key='index'>
-						<view class="class-scroll-right-list-left" @click="toShoping(item.id)">
-							<image :src="item.propaganda[0].url"></image>
-						</view>
-						<view class="class-scroll-right-list-right">
-							<view class="class-scroll-right-list-right-name" @click="toShoping(item.id)">{{item.name}}</view>
-							<view class="class-scroll-right-list-right-nameTwo" @click="toShoping(item.id)">{{item.bewrite}}</view>
-							<view class="class-scroll-right-list-right-news">
-								<view class="class-scroll-right-list-right-news-left" @click="toShoping(item.id)">
-									<view class="class-scroll-right-list-right-news-pick">￥ {{item.price}}</view>
-									<view class="class-scroll-right-list-right-news-vip" v-show="parseFloat(item.vip_price)>0">
-										￥ {{item.vip_price}} <text>绿卡价</text>
-										</view>
-								</view>
-								<view class="class-scroll-right-list-right-news-right" @click="addCars(item)">
-									<text class="lg text-gray cuIcon-cart"></text>
-								</view>
+			<view class="content-search-box">
+				<view class="content-search-box-input">
+					<text>生姜</text>
+					<text class="lg text-gray cuIcon-search"></text>
+				</view>
+			</view>
+		</view>
+		<view class="classBox-swipe">
+			<!-- 左侧 -->
+			<view class="classBox-swipe-left">
+				<scroll-view scroll-y class="classBox-swipe-left-scroll">
+					<view class="classBox-swipe-left-box">
+						<view class="classBox-swipe-left-box-list" v-for="item in left" :key='item'>
+							<view class="classBox-swipe-left-box-list-li">
+								{{item}}
 							</view>
 						</view>
 					</view>
-					
-					<!-- 暂无数据 -->
-					<view class="class-scroll-right-404">
-						我也是有底线的~
-					</view>
 				</scroll-view>
+			</view>
+			<!-- 右侧 -->
+			<view class="classBox-swipe-right">
+				<view class="classBox-swipe-right-top">
+					<view class="classBox-swipe-right-top-box">
+						<scroll-view class="classBox-swipe-right-top-scroll" scroll-x>
+							<view class="classBox-swipe-right-top-scroll-box">
+								<!-- <view class="classBox-swipe-right-top-scroll-box-list" v-for="item in left" :key='item' >{{item}}</view> -->
+								<view class="classBox-swipe-right-top-scroll-box-list" v-for="item in left" :key='item' >{{item}}</view>
+							</view>
+						</scroll-view>
+						<view class="classBox-swipe-right-top-right">
+							<text class="lg text-gray cuIcon-unfold"></text>
+						</view>
+					</view>
+					
+				</view>
+				<view class="classBox-swipe-right-bottom">
+					<!-- 弹出层 -->
+					<view class="classBox-swipe-right-top-modal">
+						<view class="classBox-swipe-right-top-modal-box">
+							<view class="classBox-swipe-right-top-modal-box-list" v-for="item in left" :key='item'>{{item}}</view>
+						</view>
+					</view>
+					<!-- 标题栏 -->
+					<view class="classBox-swipe-right-bottom-name">
+						<view class="classBox-swipe-right-bottom-name-left">
+							推荐
+						</view>
+						<view class="classBox-swipe-right-bottom-name-right">
+							<view class="classBox-swipe-right-bottom-name-right-list">
+								销量
+							</view>
+							<view class="classBox-swipe-right-bottom-name-right-list">
+								价格
+							</view>
+							<view class="classBox-swipe-right-bottom-name-right-icon">
+								<text class="lg text-gray cuIcon-top"></text>
+							</view>
+						</view>
+					</view>
+					<!-- 滑动区域 -->
+					<scroll-view class="classBox-swipe-right-bottom--scroll" scroll-y>
+						<view class="classBox-swipe-right-bottom--scroll-box">
+							<view class="classBox-swipe-right-bottom--scroll-box-title">推荐</view>
+							<classRightList class='classBox-swipe-right-bottom--scroll-box-list'/>
+							<classRightList class='classBox-swipe-right-bottom--scroll-box-list' />
+							<view class="classBox-swipe-right-bottom--scroll-box-foot">到底了,看看别的分类吧</view>
+						</view>
+					</scroll-view>
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import classRightList from '../../components/classRightList.vue'
 	export default {
 		data() {
 			return {
-				classAll:[],
-				goodsAll:[],
-				indexs: -1
+				left:[
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜",
+					'安心蔬菜',
+					"快手菜"
+				]
 			}
-		},
-		onLoad() {
-			this.infoClass()
-			
-			this.indexs = this.$store.state.car.classIndex
-		},
-		onShow() {
-			if(this.$store.state.car.classIndex >-1){
-				this.indexs = this.$store.state.car.classIndex
-			}
-			
 		},
 		methods: {
-			infoClass(){
-				this.http('nottoken/getAllClass','get',{})
-					.then(res=>{
-						console.log(res.data)
-						this.classAll = res.data.data.class
-						
-						if(this.indexs === -1){
-							this.indexs = res.data.data.class[0].id
-							this.goodsAll = res.data.data.goods.map(item=>{
-								item.propaganda = JSON.parse(item.propaganda)
-								return item
-							})
-						}else{
-							this.infoGoods(this.indexs)
-						}
-					})
-			},
-			infoGoods(id){
-				 this.http('nottoken/getOneAllGoods','get',{
-				 	id: id
-				 })
-				 .then(res=>{
-				 	this.goodsAll = res.data.data.map(item=>{
-				 		item.propaganda = JSON.parse(item.propaganda)
-				 		return item
-				 	})
-					this.indexs = id
-				})
-			},
-			infoGoodsId(id){
-				 
-					this.indexs = id
-			
-			},
-			addCars(src){ //加入购物车
-				let shopingList ={
-					id: src.id,
-					name: src.name,
-					number: 1,
-					url: src.propaganda[0].url,
-					price: parseFloat(src.price),
-					checkeds: false,
-					val: '0',
-				}
-				this.$store.commit('car/addCar',shopingList)
-				uni.showToast({
-				    title: '添加成功',
-					icon: 'success',
-				    duration: 2000
-				})
-			},
-			toShoping(id){   //进入商品详情页
+			goShopping(){
 				uni.navigateTo({
-				    url: '/pages/shoping/shoping?id='+id,
-					animationType: 'pop-in',
-					animationDuration: 200
-				})
-			},
-		},
-		computed:{
-			className: function(){
-				if(this.classAll.length > 0){
-					let nameAll = this.classAll.filter(item=>{
-						return item.id === this.indexs
-					})
-					
-					return nameAll[0].name;
-				}else{
-					return '';
-				}
+				    url: 'pages/shopping/shopping'
+				});
+				console.log('跳转')
 			}
 		},
-		watch:{
-			indexs:function(){
-				this.infoGoods(this.indexs)
-			}
+		components:{
+			classRightList
 		}
 	}
 </script>
 
-<style>
-.class{
+<style scoped>
+.classBox{
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
 	background: #FFFFFF;
-}
-.status_bar {
-	height: var(--status-bar-height);
-	width: 100%;
-	background-image:  linear-gradient(left top,#6C37B4,#E4038E);
-	color: #FFFFFF;
-}
-.contentBox{
-	width: 100%;
-	height: calc(100% - var(--status-bar-height));
-	overflow: hidden;
 }
 /* 搜索 */
-.contentBox-titleFiex-input{
+.content-search-box{
 	width: 100%;
-	height: 92rpx;
-	background: #FFFFFF;
-	padding: 16rpx 18rpx;
+	height: 82rpx;
+	padding: 10rpx 23rpx;
 	box-sizing: border-box;
+	background: #FFFFFF;
 }
-.contentBox-titleFiex-input-box{
-		width: 100%;
-		height: 100%;
-		border-radius: 30rpx;
-		background: #F2F2F2;
-		font-size: 26rpx;
-		color: #B4B4B4;
-		text-align: center;
-		line-height: 60rpx;
-}
-.contentBox-titleFiex-input-box text{
-		margin-right: 10rpx;
-		color: #B6B6B6;
-}
-/* 滚动区域 */
-.class-scroll{
+.content-search-box-input{
 	width: 100%;
-	height: calc(100% - 92rpx);
-	overflow: hidden;
+	height: 100%;
+	background: #f7f7f7;
+	border-radius: 15rpx;
+	font-size: 28rpx;
+	color: #898989;
+	text-align: center;
+	line-height: 62rpx;
+}
+
+.content-search-box-input text:nth-child(1){
+	margin-right: 8rpx;
+	color: #9A9E9D;
+	font-size: 26rpx;
+}
+/* 导航 */
+.classBox-swipe{
+	width: 100%;
+	height: calc(100% - 82rpx - var(--status-bar-height));
 	display: flex;
 	justify-content: space-between;
 }
-.class-scroll-left{
-	width: 228rpx;
+/* 左侧 */
+.classBox-swipe-left{
+	width: 175rpx;
 	height: 100%;
-	background: #F7F7F7;
+	background: #F8F8F8;
 }
-.class-scroll-left-list{
+.classBox-swipe-left-box{
 	width: 100%;
-	border-top: 1px solid #EFEFEF;
+}
+.classBox-swipe-left-scroll{
+	width: 100%;
+	height: 100%;
+}
+.classBox-swipe-left-box-list{
+	width: 100%;
+	height: 110rpx;
+	padding: 26rpx 0;
 	box-sizing: border-box;
+}
+.classBox-swipe-left-box-list-li{
+	width: 100%;
+	height: 100%;
+	border-left: 6rpx solid;
+	box-sizing: border-box;
+	border-left-color: #34BF5C;
 	font-size: 24rpx;
 	text-align: center;
-	line-height: 110rpx;
-	height: 110rpx;
-	color: #3E3D3D;
+	line-height: 54rpx;
+	color: #2F2F2F;
 }
-	
-.class-scroll-left .class-scroll-left-list:nth-child(1){
-	border:none;
-}
-.class-scroll-right{
-	width: 520rpx;
+/* 右侧 */
+.classBox-swipe-right{
+	width: 575rpx;
 	height: 100%;
+	
+	box-sizing: border-box;
+}
+/* 右侧顶部 */
+.classBox-swipe-right-top{
+	width: 100%;
+	height: 76rpx;
+	padding: 12rpx 0 12rpx 20rpx;
+	box-sizing: border-box;
+	border-bottom: 1px solid #EFEFEF;
+	position: relative;
+}
+.classBox-swipe-right-top-box{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	
+}
+.classBox-swipe-right-top-scroll{
+	width: calc(100% - 40rpx);
+	height: 100%;
+	/* padding-right: 40rpx; */
+	box-sizing: border-box;
+}
+.classBox-swipe-right-top-scroll-box{
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: nowrap;
+	white-space:nowrap;
+	width: auto;
+	height: 100%;
+}
+.classBox-swipe-right-top-scroll-box-list{
+	/* width: 170rpx; */
+	height: 100%;
+	background: #F2F2F2;
+	color: #4D4D4D;
+	margin-right: 15rpx;
+	border-radius: 8rpx;
+	font-size: 22rpx;
+	text-align: center;
+	line-height: 52rpx;
+	display: block!important;
+	padding: 0 64rpx;
+	box-sizing: border-box;
+}
+/* 向下箭头 */
+.classBox-swipe-right-top-right{
+	width: 100rpx;
+	height: 52rpx;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-image: linear-gradient(to right, transparent, #ffffff, #ffffff,#ffffff);
+	text-align: right;
+	padding-right: 30rpx;
+	box-sizing: border-box;
+	line-height: 52rpx;
+}
+.classBox-swipe-right-top-right text{
+	color: #8B8B8B;
+}
+/* 滑动区域 */
+.classBox-swipe-right-bottom{
+	width: 100%;
+	height: calc(100% - 76rpx);
+	position: relative;
+}
+/* 弹出层 */
+.classBox-swipe-right-top-modal{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0rpx;
+	box-sizing: border-box;
+	background: rgba(199,196,196,0.5);
+	display: none;
+}
+.classBox-swipe-right-top-modal-box{
+	width: 100%;
+	height: auto;
+	padding: 20rpx;
+	box-sizing: border-box;
 	background: #FFFFFF;
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+.classBox-swipe-right-top-modal-box-list{
+	width: 160rpx;
+	height: 64rpx;
+	color: #5B5B5B;
+	background: #F2F2F2;
+	font-size: 22rpx;
+	text-align: center;
+	line-height: 64rpx;
+	border-radius: 7rpx;
+	margin-right: 15rpx;
+	margin-bottom: 15rpx;
+}
+/* 标题 */
+.classBox-swipe-right-bottom-name{
+	width: 100%;
+	height: 77rpx;
+	border-bottom: 1px solid #EFEFEF;
+	box-sizing: border-box;
+	padding: 0 20rpx;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+}
+.classBox-swipe-right-bottom-name-left{
+	width: 200rpx;
+	height: 76rpx;
+	line-height: 76rpx;
+	font-size: 22rpx;
+	color: #515151;
+}
+.classBox-swipe-right-bottom-name-right{
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+.classBox-swipe-right-bottom-name-right-list{
+	height: 100%;
+	width: 70rpx;
+	text-align: center;
+	line-height: 70rpx;
+	font-size: 22rpx;
+}
+.classBox-swipe-right-bottom-name-right-icon{
+	width: 40rpx;
+	height: 70rpx;
+	line-height: 70rpx;
+	text-align: center;
+}
+.classBox-swipe-right-bottom-name-right-icon text{
+	color: #8C8C8C;
+}
+/* 右侧滑块区域 */
+.classBox-swipe-right-bottom--scroll{
+	width: 100%;
+	height: calc(100% - 77rpx);
 	padding-left: 20rpx;
 	box-sizing: border-box;
 }
-.class-scroll-right-title{
+.classBox-swipe-right-bottom--scroll-box{
+	width: 100%;
+	height: auto;
+}
+.classBox-swipe-right-bottom--scroll-box-title{
 	width: 100%;
 	height: 76rpx;
-	border-bottom: 1px solid #EFEFEF;
-	font-size: 24rpx;
+	font-size: 22rpx;
+	color: #515151;
 	line-height: 76rpx;
-	color: #5E5E5E;
+	border-bottom: 1px solid #EEEEEE;	box-sizing:border-box
 }
-.class-scroll-right-list{
+.classBox-swipe-right-bottom--scroll-box-list{
+	border-bottom: 1px solid #EEEEEE;
+}
+.classBox-swipe-right-bottom--scroll-box-foot{
 	width: 100%;
-	height: 270rpx;
-	border-bottom: 1px solid #EFEFEF;
-	display: flex;
-	justify-content: space-between;
-}
-.class-scroll-right-list-left{
-	width: 156rpx;
-	height: 270rpx;
-	padding: 50rpx 0;
-	box-sizing: border-box;
-}
-.class-scroll-right-list-left image{
-	width: 156rpx;
-	height: 100%;
-}
-.class-scroll-right-list-right{
-	width: 410rpx;
-	height: 270rpx;
-	padding: 25rpx 20rpx 0 22rpx;
-	box-sizing: border-box;
-	
-}
-.class-scroll-right-list-right-name{
-	width: 100%;
-	height: 38rpx;
-	color: #373737;
-	font-size: 26rpx;
-	line-height: 38rpx;
-	text-overflow: ellipsis;
-	/* white-space:nowrap; */
-	overflow: hidden;
-}
-.class-scroll-right-list-right-nameTwo{
-	width: 100%;
-	height: 34rpx;
-	color: #8C8C8C;
-	font-size: 22rpx;
-	line-height: 34rpx;
-	text-overflow: ellipsis;
-	/* white-space:nowrap; */
-	overflow: hidden;
-}
-.class-scroll-right-list-right-news{
-	width: 100%;
-	height: 140rpx;
-	display: flex;
-	justify-content: space-between;
-}
-.class-scroll-right-list-right-news-left{
-	flex: 1;
-	height: 140rpx;
-	padding-top: 30rpx;
-}
-.class-scroll-right-list-right-news-pick{
-	width: 100%;
-	height: 36rpx;
-	font-size: 28rpx;
-	line-height: 36rpx;
-	color: #FF4F67;
-	font-weight: 600;
-}
-.class-scroll-right-list-right-news-vip{
-	width: 100%;
-	height: 30rpx;
-	font-size: 22rpx;
-	line-height: 30rpx;
-	color: #4ABC69;
-	font-weight: 600;
-	padding-left: 10rpx;
-	box-sizing: border-box;
-}
-.class-scroll-right-list-right-news-vip text{
-	background: #4ABC69;
-	color: #FFFFFF;
-	font-size: 16rpx;
-	padding: 5rpx 10rpx;
-	margin-left: 10rpx;
-}
-.class-scroll-right-list-right-news-right{
-	width: 60rpx;
-	padding-top: 36rpx;
-	box-sizing: border-box;
-}
-.class-scroll-right-list-right-news-right text{
-	width: 60rpx;
-	height: 60rpx;
-	display: inline-block;
-	background: #47C470;
-	color: #FFFFFF;
-	font-size: 30rpx;
+	height: 70rpx;
+	line-height: 70rpx;
 	text-align: center;
-	line-height: 60rpx;
-	border-radius: 30rpx;
-}
-.class-scroll-right-404{
-	width: 100%;
-	height: 60rpx;
-	line-height: 60rpx;
-	text-align: center;
-	font-size: 26rpx;
 	color: #999999;
+	font-size: 24rpx;
 }
 </style>
